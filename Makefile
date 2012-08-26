@@ -1,14 +1,14 @@
-CXXFLAGS =	-O2 -g -mwindows -Wall -fmessage-length=0
+CXXFLAGS = -O2 -g -mwindows -Wall -fmessage-length=0
 
 TARGET = undelete.exe
 
 $(TARGET): milan.o
-	$(CXX)  -o $(TARGET) milan.o
+	$(CXX) -o $(TARGET) milan.o
 # above, we are saying undelete.exe depends on milan.o
 # and to create undelete.exet we give the g++ command as shown on the next line
 
 milan.o : milan.cpp milan.h NTFSDrive.h
-	$(CXX) -c milan.cpp
+	$(CXX) -g -c milan.cpp
 
 
 clean:

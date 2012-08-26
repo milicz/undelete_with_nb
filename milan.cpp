@@ -630,12 +630,12 @@ int main(int argc, char *argv[]) {
 	printf("Zoran Car !\n");
     int iz = 0;
 
-	while (1)
+	while (0)
 	{
 		 iz++;
 	}
 
-	return 0;
+	//return 0;
 	int i,nRet;
 	DWORD dwBytes;
 
