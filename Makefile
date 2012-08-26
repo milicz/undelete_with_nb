@@ -12,7 +12,7 @@ milan.o : milan.cpp milan.h NTFSDrive.h
 
 
 clean:
-	del *.o undelete.exe
+	rm *.o undelete.exe
  
  
 all : $(TARGET)
