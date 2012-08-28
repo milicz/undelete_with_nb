@@ -1,13 +1,28 @@
+/*
+ * NTFSDrive.h
+ *
+ *  Created on: Aug 14, 2012
+ *      Author: mmilic
+ */
+
+#ifndef NTFSDRIVE_H_
+#define NTFSDRIVE_H_
+
+
+
+
+#endif /* NTFSDRIVE_H_ */
+
 // NTFSDrive.h: interface for the CNTFSDrive class.
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_NTFSDRIVE_H__078B2392_2978_4C23_97FD_166C4B234BF3__INCLUDED_)
-#define AFX_NTFSDRIVE_H__078B2392_2978_4C23_97FD_166C4B234BF3__INCLUDED_
-
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
+//#if !defined(AFX_NTFSDRIVE_H__078B2392_2978_4C23_97FD_166C4B234BF3__INCLUDED_)
+//#define AFX_NTFSDRIVE_H__078B2392_2978_4C23_97FD_166C4B234BF3__INCLUDED_
+//
+//#if _MSC_VER > 1000
+//#pragma once
+//#endif // _MSC_VER > 1000
 
 
 #pragma pack(push, curAlignment)
@@ -95,4 +110,4 @@ public:
 
 };
 
-#endif // !defined(AFX_NTFSDRIVE_H__078B2392_2978_4C23_97FD_166C4B234BF3__INCLUDED_)
+//#endif // !defined(AFX_NTFSDRIVE_H__078B2392_2978_4C23_97FD_166C4B234BF3__INCLUDED_)

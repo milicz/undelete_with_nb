@@ -1,3 +1,18 @@
+/*
+ * milan.h
+ *
+ *  Created on: Aug 14, 2012
+ *      Author: mmilic
+ */
+
+#ifndef MILAN_H_
+#define MILAN_H_
+
+
+
+
+#endif /* MILAN_H_ */
+
 // MFTRecord.h: interface for the CMFTRecord class.
 //
 //////////////////////////////////////////////////////////////////////
@@ -10,6 +25,7 @@
 #endif // _MSC_VER > 1000
 
 // #pragma pack(push, curAlignment)
+//#include "NTFSDrive.h"
 
 #pragma pack(push, 8)
 
@@ -83,8 +99,8 @@ typedef struct
 	DWORD		dwFATAttributes;// As FAT + 0x800 = compressed
 	DWORD		dwReserved1;	// unknown
 
-} ATTR_STANDARD;   
-  
+} ATTR_STANDARD;
+
 typedef struct
 {
 	LONGLONG	dwMftParentDir;            // Seq-nr parent-dir MFT entry
@@ -100,14 +116,14 @@ typedef struct
 	BYTE		chFileNameType;            // 8.3 / Unicode
 	WORD		wFilename[512];             // Name (in Unicode ?)
 
-}ATTR_FILENAME; 
+}ATTR_FILENAME;
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // #pragma pack(pop, curAlignment)
 
 #pragma pack(pop)
 
-class CMFTRecord  
+class CMFTRecord
 {
 protected:
 	HANDLE	m_hDrive;
@@ -134,7 +150,7 @@ public:
 public:
 	int SetRecordInfo(LONGLONG n64StartPos, DWORD dwRecSize, DWORD dwBytesPerCluster);
 	void SetDriveHandle(HANDLE hDrive);
-	
+
 	int ExtractFile(BYTE *puchMFTBuffer, DWORD dwLen, bool bExcludeData=false);
 
 	CMFTRecord();
@@ -166,7 +182,7 @@ struct NTFS_PART_BOOT_SEC
 	char		chJumpInstruction[3];
 	char		chOemID[4];
 	char		chDummy[4];
-	
+
 	struct NTFS_BPB
 	{
 		WORD		wBytesPerSec;
@@ -198,7 +214,7 @@ struct NTFS_PART_BOOT_SEC
 #pragma pack(pop)
 
 
-class CNTFSDrive  
+class CNTFSDrive
 {
 protected:
 //////////////// physical drive info/////////////
@@ -208,7 +224,7 @@ protected:
 
 	DWORD m_dwBytesPerCluster;
 	DWORD m_dwBytesPerSector;
-	
+
 	int LoadMFT(LONGLONG nStartCluster);
 
 /////////////////// the MFT info /////////////////
@@ -233,7 +249,7 @@ public:
 
 	int GetFileDetail(DWORD nFileSeq, ST_FILEINFO &stFileInfo);
 	int Read_File(DWORD nFileSeq, BYTE *&puchFileData, DWORD &dwFileDataLen);
-	
+
 	void SetDriveHandle(HANDLE hDrive);
 	void  SetStartSector(DWORD dwStartSector, DWORD dwBytesPerSector);
 
@@ -255,7 +271,7 @@ public:
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "NTFSDrive.h"
+
 
 
 typedef struct
