@@ -618,7 +618,7 @@ int CMFTRecord::ReadRaw(LONGLONG n64LCN, BYTE *chData, DWORD &dwLen) {
 
 int main(int argc, char *argv[]) {
 
-    printf("Milan Car !\n");
+    printf("Zoran Car !\n");
 
 
     int i, nRet;
