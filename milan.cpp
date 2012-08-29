@@ -587,7 +587,7 @@ int CMFTRecord::ReadRaw(LONGLONG n64LCN, BYTE *chData, DWORD &dwLen) {
     n64Pos.QuadPart = (n64LCN) * m_dwBytesPerCluster;
     n64Pos.QuadPart += m_n64StartPos;
 
-    //   data is available in the relative sector from the begining od the drive
+    //   data is available in the relative sector from the beginning of the drive
     //    so point that data
     nRet = SetFilePointer(m_hDrive, n64Pos.LowPart, &n64Pos.HighPart, FILE_BEGIN);
     if (nRet == 0xFFFFFFFF)
@@ -616,49 +616,67 @@ int CMFTRecord::ReadRaw(LONGLONG n64LCN, BYTE *chData, DWORD &dwLen) {
     return ERROR_SUCCESS;
 }
 
+//TODO many potential bugs exist BOOL or bool
+//TODO add sorting functionality
+BOOL bGetListOfDisks(char * szListOfDisks)
+{
+     char szDriveInformation[1024];
+     memset(szDriveInformation, '\0', sizeof(&szDriveInformation));
+
+     char tempBuff[64];
+     GetLogicalDriveStrings(1024, szDriveInformation);
+     bool bOK = true;
+     
+     char * szDriveLetters = szDriveInformation;
+     while (szDriveLetters && bOK) 
+     {
+          int iType = GetDriveType(szDriveLetters);
+          switch(iType)
+          {//TODO add switches for printing in console
+              case DRIVE_UNKNOWN:
+                  sprintf(tempBuff,"Unknown %s\n", szDriveLetters);
+                  strcat(szListOfDisks, tempBuff);
+                  break;
+              case DRIVE_REMOVABLE:
+                  sprintf(tempBuff,"Removable storage %s\n", szDriveLetters);
+                  strcat(szListOfDisks, tempBuff);
+                  break;
+              case DRIVE_FIXED:
+                  sprintf(tempBuff,"Hard drive %s\n", szDriveLetters);
+                  strcat(szListOfDisks, tempBuff);
+                  break;
+              case DRIVE_REMOTE:
+                  sprintf(tempBuff,"Remote (network) drive %s\n", szDriveLetters);
+                  strcat(szListOfDisks, tempBuff);
+                  break;
+              case DRIVE_CDROM:
+                  sprintf(tempBuff,"CD-ROM drive %s\n", szDriveLetters);
+                  strcat(szListOfDisks, tempBuff);
+                  break;
+              case DRIVE_RAMDISK:
+                  sprintf(tempBuff,"RAM disk %s\n", szDriveLetters);
+                  strcat(szListOfDisks, tempBuff);
+                  break;
+              default:
+                  bOK = false;
+                  return (true); //TODO doesn't make sense
+          }
+          szDriveLetters = &szDriveLetters[strlen(szDriveLetters) + 1];
+     }
+     
+    
+     // getchar();  //useful for waiting
+}
+
 int main(int argc, char *argv[]) {
 
     printf("Zoran Car !\n");
+    char szListOfDisks[1024];
+    memset (szListOfDisks, '\0', sizeof(szListOfDisks));
 
-	char szDriveInformation[1024];
-
-	GetLogicalDriveStrings(1024, szDriveInformation);
-        BOOL bOK = true;
-	char * szDriveLetters = szDriveInformation;
-	while (szDriveLetters && bOK) {
-		int iType = GetDriveType(szDriveLetters);
-		switch(iType){
-                    case DRIVE_UNKNOWN:
-				printf("Unknown %s\n", szDriveLetters);
-				break;
-
-                    case DRIVE_REMOVABLE:
-				printf("Removable storage %s\n", szDriveLetters);
-				break;
-
-                    case DRIVE_FIXED:
-				printf("Hard drive %s\n", szDriveLetters);
-				break;
-
-                    case DRIVE_REMOTE:
-				printf("Remote (network) drive %s\n", szDriveLetters);
-				break;
-
-                    case DRIVE_CDROM:
-				printf("CD-ROM drive %s\n", szDriveLetters);
-				break;
-
-                    case DRIVE_RAMDISK:
-				printf("RAM disk %s\n", szDriveLetters);
-				break;
-                    default:
-                        bOK = false;
-                        break;
-		}
-		szDriveLetters = &szDriveLetters[strlen(szDriveLetters) + 1];
-	}
-	// getchar();  //usefull for waiting
-        
+    bGetListOfDisks(szListOfDisks);
+    printf (szListOfDisks);
+    
     int i, nRet;
     DWORD dwBytes;
 
