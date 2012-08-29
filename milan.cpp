@@ -663,9 +663,6 @@ BOOL bGetListOfDisks(char * szListOfDisks)
           }
           szDriveLetters = &szDriveLetters[strlen(szDriveLetters) + 1];
      }
-     
-    
-     // getchar();  //useful for waiting
 }
 
 int main(int argc, char *argv[]) {
@@ -701,7 +698,7 @@ int main(int argc, char *argv[]) {
     if (hDrive == INVALID_HANDLE_VALUE)
         return GetLastError();
 
-    nRet = ReadFile(hDrive, szSector, 512, &dwBytes, 0); //read first 512B from the drive
+    nRet = ReadFile(hDrive, szSector, 512, &dwBytes, 0); //read first 512B from the drive (NTFS BOOT SECTOR)
     if (!nRet)
         return GetLastError();
 
@@ -869,7 +866,8 @@ int main(int argc, char *argv[]) {
 //        }
 
     }
-
+     
+    getchar();  //useful for waiting
     return 0;
 }
 
