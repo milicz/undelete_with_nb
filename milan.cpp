@@ -620,7 +620,45 @@ int main(int argc, char *argv[]) {
 
     printf("Zoran Car !\n");
 
+	char szDriveInformation[1024];
 
+	GetLogicalDriveStrings(1024, szDriveInformation);
+        BOOL bOK = true;
+	char * szDriveLetters = szDriveInformation;
+	while (szDriveLetters && bOK) {
+		int iType = GetDriveType(szDriveLetters);
+		switch(iType){
+                    case DRIVE_UNKNOWN:
+				printf("Unknown %s\n", szDriveLetters);
+				break;
+
+                    case DRIVE_REMOVABLE:
+				printf("Removable storage %s\n", szDriveLetters);
+				break;
+
+                    case DRIVE_FIXED:
+				printf("Hard drive %s\n", szDriveLetters);
+				break;
+
+                    case DRIVE_REMOTE:
+				printf("Remote (network) drive %s\n", szDriveLetters);
+				break;
+
+                    case DRIVE_CDROM:
+				printf("CD-ROM drive %s\n", szDriveLetters);
+				break;
+
+                    case DRIVE_RAMDISK:
+				printf("RAM disk %s\n", szDriveLetters);
+				break;
+                    default:
+                        bOK = false;
+                        break;
+		}
+		szDriveLetters = &szDriveLetters[strlen(szDriveLetters) + 1];
+	}
+	// getchar();  //usefull for waiting
+        
     int i, nRet;
     DWORD dwBytes;
 
