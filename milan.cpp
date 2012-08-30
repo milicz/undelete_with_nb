@@ -25,6 +25,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 #define PHYSICAL_DRIVE "\\\\.\\PhysicalDrive0"
+#define REMOVABLE_DRIVE "\\.\P:\"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -616,7 +617,7 @@ int CMFTRecord::ReadRaw(LONGLONG n64LCN, BYTE *chData, DWORD &dwLen) {
     return ERROR_SUCCESS;
 }
 
-//TODO many potential bugs exist BOOL or bool
+//TODO many potential bugs exist
 //TODO add sorting functionality
 BOOL bGetListOfDisks(char * szListOfDisks)
 {
@@ -694,7 +695,8 @@ int main(int argc, char *argv[]) {
     DWORD dwMainPrevRelSector = 0;
     DWORD dwPrevRelSector = 0;
 
-    HANDLE hDrive = CreateFile(PHYSICAL_DRIVE, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
+    //HANDLE hDrive = CreateFile(PHYSICAL_DRIVE, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
+    HANDLE hDrive = CreateFile(REMOVABLE_DRIVE, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
     if (hDrive == INVALID_HANDLE_VALUE)
         return GetLastError();
 
@@ -707,7 +709,7 @@ int main(int argc, char *argv[]) {
     int br = 0;
 
     PartitionTbl = (PARTITION*) (szSector + 0x1BE); //set position to the partition table
-
+    return (0);
     for (i = 0; i < 4; i++) /// scanning partitions in the physical disk
     {
         stDrive.wCylinder = PartitionTbl->chCylinder;
