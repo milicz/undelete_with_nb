@@ -25,7 +25,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 #define PHYSICAL_DRIVE "\\\\.\\PhysicalDrive0"
-#define REMOVABLE_DRIVE "\\.\P:\"
+#define REMOVABLE_DRIVE "\\\\.\\F:"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -698,12 +698,21 @@ int main(int argc, char *argv[]) {
     //HANDLE hDrive = CreateFile(PHYSICAL_DRIVE, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
     HANDLE hDrive = CreateFile(REMOVABLE_DRIVE, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
     if (hDrive == INVALID_HANDLE_VALUE)
+    {
+        sprintf (szBuffer, "Windows reported error: %d\n", GetLastError());
+        printf(szBuffer);
+        getchar();  //useful for waiting
         return GetLastError();
+    }
+        
 
     nRet = ReadFile(hDrive, szSector, 512, &dwBytes, 0); //read first 512B from the drive (NTFS BOOT SECTOR)
     if (!nRet)
+    {
+        printf ("%s", GetLastError());
         return GetLastError();
-
+    }
+    
     dwPrevRelSector = 0;
     dwMainPrevRelSector = 0;
     int br = 0;
